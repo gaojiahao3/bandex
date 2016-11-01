@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.OrderInfoMapper">
+	<resultMap id="BaseResultMap" type="com.bandex.apicenter.model.OrderInfo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+		<result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+		<result column="discount_price" property="discountPrice" jdbcType="DOUBLE" />
+		<result column="freight_price" property="freightPrice" jdbcType="DOUBLE" />
+		<result column="final_price" property="finalPrice" jdbcType="DOUBLE" />
+		<result column="used_integral" property="usedIntegral" jdbcType="INTEGER" />
+		<result column="order_type" property="orderType" jdbcType="INTEGER" />
+		<result column="order_state" property="orderState" jdbcType="INTEGER" />
+		<result column="is_paid" property="isPaid" jdbcType="INTEGER" />
+		<result column="pay_type" property="payType" jdbcType="INTEGER" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="paid_time" property="paidTime" jdbcType="TIMESTAMP" />
+		<result column="deliver_time" property="deliverTime" jdbcType="TIMESTAMP" />
+		<result column="logistics_code" property="logisticsCode" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+		<result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+		<result column="district_id" property="districtId" jdbcType="BIGINT" />
+		<result column="district_name" property="districtName" jdbcType="VARCHAR" />
+		<result column="order_address" property="orderAddress" jdbcType="VARCHAR" />
+		<result column="return_type" property="returnType" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+		<result column="need_invoice" property="needInvoice" jdbcType="INTEGER" />
+		<result column="invoice_tylpe" property="invoiceTylpe" jdbcType="INTEGER" />
+		<result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="DetailResultMap" type="com.bandex.apicenter.dto.OrderDetailDto">
+		<result column="orderTimestamp" property="orderTimestamp" typeHandler="LongDateTypeHandler" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, order_code, total_price, discount_price, freight_price, final_price, used_integral,
+		order_type, order_state, is_paid, pay_type, order_time, paid_time, deliver_time,
+		logistics_code, user_id, nick_name, link_man, link_tel, district_id, district_name,
+		order_address, return_type, create_time, modify_time, delete_flag, need_invoice,
+		invoice_tylpe, invoice_title
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_info
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByOrderCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_info
+		where order_code = #{order_code}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order_info
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.bandex.apicenter.model.OrderInfo">
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into order_info (order_code, total_price, discount_price,
+		freight_price, final_price, used_integral,
+		order_type, order_state, is_paid,
+		pay_type, order_time, paid_time,
+		deliver_time, logistics_code, user_id,
+		nick_name, link_man, link_tel,
+		district_id, district_name, order_address,
+		return_type, create_time, modify_time,
+		delete_flag, need_invoice, invoice_tylpe,
+		invoice_title)
+		values (#{orderCode,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DOUBLE}, #{discountPrice,jdbcType=DOUBLE},
+		#{freightPrice,jdbcType=DOUBLE}, #{finalPrice,jdbcType=DOUBLE}, #{usedIntegral,jdbcType=INTEGER},
+		#{orderType,jdbcType=INTEGER}, #{orderState,jdbcType=INTEGER}, #{isPaid,jdbcType=INTEGER},
+		#{payType,jdbcType=INTEGER}, #{orderTime,jdbcType=TIMESTAMP}, #{paidTime,jdbcType=TIMESTAMP},
+		#{deliverTime,jdbcType=TIMESTAMP}, #{logisticsCode,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
+		#{nickName,jdbcType=VARCHAR}, #{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR},
+		#{districtId,jdbcType=BIGINT}, #{districtName,jdbcType=VARCHAR}, #{orderAddress,jdbcType=VARCHAR},
+		#{returnType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{deleteFlag,jdbcType=INTEGER}, #{needInvoice,jdbcType=INTEGER}, #{invoiceTylpe,jdbcType=INTEGER},
+		#{invoiceTitle,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.bandex.apicenter.model.OrderInfo">
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into order_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="totalPrice != null">
+				total_price,
+			</if>
+			<if test="discountPrice != null">
+				discount_price,
+			</if>
+			<if test="freightPrice != null">
+				freight_price,
+			</if>
+			<if test="finalPrice != null">
+				final_price,
+			</if>
+			<if test="usedIntegral != null">
+				used_integral,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="orderState != null">
+				order_state,
+			</if>
+			<if test="isPaid != null">
+				is_paid,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="orderTime != null">
+				order_time,
+			</if>
+			<if test="paidTime != null">
+				paid_time,
+			</if>
+			<if test="deliverTime != null">
+				deliver_time,
+			</if>
+			<if test="logisticsCode != null">
+				logistics_code,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="linkMan != null">
+				link_man,
+			</if>
+			<if test="linkTel != null">
+				link_tel,
+			</if>
+			<if test="districtId != null">
+				district_id,
+			</if>
+			<if test="districtName != null">
+				district_name,
+			</if>
+			<if test="orderAddress != null">
+				order_address,
+			</if>
+			<if test="returnType != null">
+				return_type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test="needInvoice != null">
+				need_invoice,
+			</if>
+			<if test="invoiceTylpe != null">
+				invoice_tylpe,
+			</if>
+			<if test="invoiceTitle != null">
+				invoice_title,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="totalPrice != null">
+				#{totalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="discountPrice != null">
+				#{discountPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="freightPrice != null">
+				#{freightPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="finalPrice != null">
+				#{finalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="usedIntegral != null">
+				#{usedIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=INTEGER},
+			</if>
+			<if test="orderState != null">
+				#{orderState,jdbcType=INTEGER},
+			</if>
+			<if test="isPaid != null">
+				#{isPaid,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=INTEGER},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paidTime != null">
+				#{paidTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deliverTime != null">
+				#{deliverTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="logisticsCode != null">
+				#{logisticsCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="linkMan != null">
+				#{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkTel != null">
+				#{linkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="districtId != null">
+				#{districtId,jdbcType=BIGINT},
+			</if>
+			<if test="districtName != null">
+				#{districtName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderAddress != null">
+				#{orderAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="returnType != null">
+				#{returnType,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteFlag != null">
+				#{deleteFlag,jdbcType=INTEGER},
+			</if>
+			<if test="needInvoice != null">
+				#{needInvoice,jdbcType=INTEGER},
+			</if>
+			<if test="invoiceTylpe != null">
+				#{invoiceTylpe,jdbcType=INTEGER},
+			</if>
+			<if test="invoiceTitle != null">
+				#{invoiceTitle,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.OrderInfo">
+		update order_info
+		<set>
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="totalPrice != null">
+				total_price = #{totalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="discountPrice != null">
+				discount_price = #{discountPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="freightPrice != null">
+				freight_price = #{freightPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="finalPrice != null">
+				final_price = #{finalPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="usedIntegral != null">
+				used_integral = #{usedIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=INTEGER},
+			</if>
+			<if test="orderState != null">
+				order_state = #{orderState,jdbcType=INTEGER},
+			</if>
+			<if test="isPaid != null">
+				is_paid = #{isPaid,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=INTEGER},
+			</if>
+			<if test="orderTime != null">
+				order_time = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paidTime != null">
+				paid_time = #{paidTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deliverTime != null">
+				deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="logisticsCode != null">
+				logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="linkMan != null">
+				link_man = #{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkTel != null">
+				link_tel = #{linkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="districtId != null">
+				district_id = #{districtId,jdbcType=BIGINT},
+			</if>
+			<if test="districtName != null">
+				district_name = #{districtName,jdbcType=VARCHAR},
+			</if>
+			<if test="orderAddress != null">
+				order_address = #{orderAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="returnType != null">
+				return_type = #{returnType,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleteFlag != null">
+				delete_flag = #{deleteFlag,jdbcType=INTEGER},
+			</if>
+			<if test="needInvoice != null">
+				need_invoice = #{needInvoice,jdbcType=INTEGER},
+			</if>
+			<if test="invoiceTylpe != null">
+				invoice_tylpe = #{invoiceTylpe,jdbcType=INTEGER},
+			</if>
+			<if test="invoiceTitle != null">
+				invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.OrderInfo">
+		update order_info
+		set order_code = #{orderCode,jdbcType=VARCHAR},
+		total_price = #{totalPrice,jdbcType=DOUBLE},
+		discount_price = #{discountPrice,jdbcType=DOUBLE},
+		freight_price = #{freightPrice,jdbcType=DOUBLE},
+		final_price = #{finalPrice,jdbcType=DOUBLE},
+		used_integral = #{usedIntegral,jdbcType=INTEGER},
+		order_type = #{orderType,jdbcType=INTEGER},
+		order_state = #{orderState,jdbcType=INTEGER},
+		is_paid = #{isPaid,jdbcType=INTEGER},
+		pay_type = #{payType,jdbcType=INTEGER},
+		order_time = #{orderTime,jdbcType=TIMESTAMP},
+		paid_time = #{paidTime,jdbcType=TIMESTAMP},
+		deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+		logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=BIGINT},
+		nick_name = #{nickName,jdbcType=VARCHAR},
+		link_man = #{linkMan,jdbcType=VARCHAR},
+		link_tel = #{linkTel,jdbcType=VARCHAR},
+		district_id = #{districtId,jdbcType=BIGINT},
+		district_name = #{districtName,jdbcType=VARCHAR},
+		order_address = #{orderAddress,jdbcType=VARCHAR},
+		return_type = #{returnType,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+		delete_flag = #{deleteFlag,jdbcType=INTEGER},
+		need_invoice = #{needInvoice,jdbcType=INTEGER},
+		invoice_tylpe = #{invoiceTylpe,jdbcType=INTEGER},
+		invoice_title = #{invoiceTitle,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectMyOrderList" resultType="com.bandex.apicenter.dto.OrderListDto" parameterType="java.util.Map">
+		select
+			oi.order_code as orderCode,
+			oi.order_state as orderState,
+			oi.total_price as totalPrice
+		from order_info oi
+		where oi.delete_flag = 0
+		and oi.user_id = #{current_user_id}
+		<if test="orderState != null">
+			and oi.order_state = #{orderState}
+		</if>
+		order by oi.create_time desc
+		limit #{pageIndex}, #{pageSize}
+	</select>
+	<select id="selectOrderDetailByOrderCode" resultMap="DetailResultMap" parameterType="java.lang.String">
+		select
+			oi.order_code as orderCode,
+			oi.order_state as orderState,
+			oi.total_price as totalPrice,
+			oi.order_time as orderTimestamp,
+			oi.link_man as linkMan,
+			oi.link_tel as linkTel,
+			oi.order_address as orderAddress
+		from order_info oi
+		where oi.delete_flag = 0
+		and oi.order_code = #{orderCode}
+	</select>
+</mapper>

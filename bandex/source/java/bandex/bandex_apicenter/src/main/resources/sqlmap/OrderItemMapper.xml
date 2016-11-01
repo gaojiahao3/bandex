@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.OrderItemMapper">
+	<resultMap id="BaseResultMap" type="com.bandex.apicenter.model.OrderItem">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="order_id" property="orderId" jdbcType="BIGINT" />
+		<result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+		<result column="product_id" property="productId" jdbcType="BIGINT" />
+		<result column="product_code" property="productCode" jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
+		<result column="product_colors" property="productColors" jdbcType="VARCHAR" />
+		<result column="product_rules" property="productRules" jdbcType="VARCHAR" />
+		<result column="product_price" property="productPrice" jdbcType="DOUBLE" />
+		<result column="buy_price" property="buyPrice" jdbcType="DOUBLE" />
+		<result column="product_need_integral" property="productNeedIntegral" jdbcType="BIGINT" />
+		<result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+		<result column="product_state" property="productState" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, order_id, order_code, product_id, product_code, product_name, product_icon, product_colors,
+		product_rules, product_price, buy_price, product_need_integral, buy_num, product_state,
+		create_time, modify_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_item
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order_item
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.bandex.apicenter.model.OrderItem">
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into order_item (order_id, order_code, product_id,
+		product_code, product_name, product_icon,
+		product_colors, product_rules, product_price,
+		buy_price, product_need_integral, buy_num,
+		product_state, create_time, modify_time
+		)
+		values (#{orderId,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT},
+		#{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productIcon,jdbcType=VARCHAR},
+		#{productColors,jdbcType=VARCHAR}, #{productRules,jdbcType=VARCHAR}, #{productPrice,jdbcType=DOUBLE},
+		#{buyPrice,jdbcType=DOUBLE}, #{productNeedIntegral,jdbcType=BIGINT}, #{buyNum,jdbcType=INTEGER},
+		#{productState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.bandex.apicenter.model.OrderItem">
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into order_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="productId != null">
+				product_id,
+			</if>
+			<if test="productCode != null">
+				product_code,
+			</if>
+			<if test="productName != null">
+				product_name,
+			</if>
+			<if test="productIcon != null">
+				product_icon,
+			</if>
+			<if test="productColors != null">
+				product_colors,
+			</if>
+			<if test="productRules != null">
+				product_rules,
+			</if>
+			<if test="productPrice != null">
+				product_price,
+			</if>
+			<if test="buyPrice != null">
+				buy_price,
+			</if>
+			<if test="productNeedIntegral != null">
+				product_need_integral,
+			</if>
+			<if test="buyNum != null">
+				buy_num,
+			</if>
+			<if test="productState != null">
+				product_state,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				#{productId,jdbcType=BIGINT},
+			</if>
+			<if test="productCode != null">
+				#{productCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				#{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productIcon != null">
+				#{productIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="productColors != null">
+				#{productColors,jdbcType=VARCHAR},
+			</if>
+			<if test="productRules != null">
+				#{productRules,jdbcType=VARCHAR},
+			</if>
+			<if test="productPrice != null">
+				#{productPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="buyPrice != null">
+				#{buyPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="productNeedIntegral != null">
+				#{productNeedIntegral,jdbcType=BIGINT},
+			</if>
+			<if test="buyNum != null">
+				#{buyNum,jdbcType=INTEGER},
+			</if>
+			<if test="productState != null">
+				#{productState,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.OrderItem">
+		update order_item
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=BIGINT},
+			</if>
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productId != null">
+				product_id = #{productId,jdbcType=BIGINT},
+			</if>
+			<if test="productCode != null">
+				product_code = #{productCode,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="productIcon != null">
+				product_icon = #{productIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="productColors != null">
+				product_colors = #{productColors,jdbcType=VARCHAR},
+			</if>
+			<if test="productRules != null">
+				product_rules = #{productRules,jdbcType=VARCHAR},
+			</if>
+			<if test="productPrice != null">
+				product_price = #{productPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="buyPrice != null">
+				buy_price = #{buyPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="productNeedIntegral != null">
+				product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+			</if>
+			<if test="buyNum != null">
+				buy_num = #{buyNum,jdbcType=INTEGER},
+			</if>
+			<if test="productState != null">
+				product_state = #{productState,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.OrderItem">
+		update order_item
+		set order_id = #{orderId,jdbcType=BIGINT},
+		order_code = #{orderCode,jdbcType=VARCHAR},
+		product_id = #{productId,jdbcType=BIGINT},
+		product_code = #{productCode,jdbcType=VARCHAR},
+		product_name = #{productName,jdbcType=VARCHAR},
+		product_icon = #{productIcon,jdbcType=VARCHAR},
+		product_colors = #{productColors,jdbcType=VARCHAR},
+		product_rules = #{productRules,jdbcType=VARCHAR},
+		product_price = #{productPrice,jdbcType=DOUBLE},
+		buy_price = #{buyPrice,jdbcType=DOUBLE},
+		product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+		buy_num = #{buyNum,jdbcType=INTEGER},
+		product_state = #{productState,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectItemListByOrderCode" resultType="com.bandex.apicenter.dto.OrderItemListDto" parameterType="java.lang.String">
+		select
+			oi.product_id as productId,
+			oi.product_icon as productIcon,
+			oi.product_name as productName,
+			oi.product_colors as productColors,
+			oi.product_rules as productRules,
+			oi.buy_num as buyNum,
+			oi.buy_price as buyPrice
+		from order_item oi
+		where oi.order_code = #{orderCode}
+		order by oi.create_time
+	</select>
+</mapper>

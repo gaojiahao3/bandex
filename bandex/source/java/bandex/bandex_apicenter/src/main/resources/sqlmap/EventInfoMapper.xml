@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.EventInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.EventInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="event_name" property="eventName" jdbcType="VARCHAR" />
+    <result column="event_description" property="eventDescription" jdbcType="VARCHAR" />
+    <result column="event_start_time" property="eventStartTime" jdbcType="TIMESTAMP" />
+    <result column="event_end_time" property="eventEndTime" jdbcType="TIMESTAMP" />
+    <result column="sport_category" property="sportCategory" jdbcType="INTEGER" />
+    <result column="sport_type" property="sportType" jdbcType="INTEGER" />
+    <result column="sport_id" property="sportId" jdbcType="BIGINT" />
+    <result column="sport_name" property="sportName" jdbcType="VARCHAR" />
+    <result column="start_address" property="startAddress" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="x_index" property="xIndex" jdbcType="VARCHAR" />
+    <result column="y_index" property="yIndex" jdbcType="VARCHAR" />
+    <result column="is_public" property="isPublic" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="event_state" property="eventState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_name, event_description, event_start_time, event_end_time, sport_category, 
+    sport_type, sport_id, sport_name, start_address, product_id, order_id, x_index, y_index, 
+    is_public, user_id, create_time, modify_time, delete_flag, event_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from event_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from event_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.EventInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into event_info (event_name, event_description, event_start_time, 
+      event_end_time, sport_category, sport_type, 
+      sport_id, sport_name, start_address, 
+      product_id, order_id, x_index, 
+      y_index, is_public, user_id, 
+      create_time, modify_time, delete_flag, 
+      event_state)
+    values (#{eventName,jdbcType=VARCHAR}, #{eventDescription,jdbcType=VARCHAR}, #{eventStartTime,jdbcType=TIMESTAMP}, 
+      #{eventEndTime,jdbcType=TIMESTAMP}, #{sportCategory,jdbcType=INTEGER}, #{sportType,jdbcType=INTEGER}, 
+      #{sportId,jdbcType=BIGINT}, #{sportName,jdbcType=VARCHAR}, #{startAddress,jdbcType=VARCHAR}, 
+      #{productId,jdbcType=BIGINT}, #{orderId,jdbcType=INTEGER}, #{xIndex,jdbcType=VARCHAR}, 
+      #{yIndex,jdbcType=VARCHAR}, #{isPublic,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=INTEGER}, 
+      #{eventState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.EventInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into event_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventName != null" >
+        event_name,
+      </if>
+      <if test="eventDescription != null" >
+        event_description,
+      </if>
+      <if test="eventStartTime != null" >
+        event_start_time,
+      </if>
+      <if test="eventEndTime != null" >
+        event_end_time,
+      </if>
+      <if test="sportCategory != null" >
+        sport_category,
+      </if>
+      <if test="sportType != null" >
+        sport_type,
+      </if>
+      <if test="sportId != null" >
+        sport_id,
+      </if>
+      <if test="sportName != null" >
+        sport_name,
+      </if>
+      <if test="startAddress != null" >
+        start_address,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="xIndex != null" >
+        x_index,
+      </if>
+      <if test="yIndex != null" >
+        y_index,
+      </if>
+      <if test="isPublic != null" >
+        is_public,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="eventState != null" >
+        event_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventName != null" >
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDescription != null" >
+        #{eventDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStartTime != null" >
+        #{eventStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventEndTime != null" >
+        #{eventEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportCategory != null" >
+        #{sportCategory,jdbcType=INTEGER},
+      </if>
+      <if test="sportType != null" >
+        #{sportType,jdbcType=INTEGER},
+      </if>
+      <if test="sportId != null" >
+        #{sportId,jdbcType=BIGINT},
+      </if>
+      <if test="sportName != null" >
+        #{sportName,jdbcType=VARCHAR},
+      </if>
+      <if test="startAddress != null" >
+        #{startAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="xIndex != null" >
+        #{xIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="yIndex != null" >
+        #{yIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="eventState != null" >
+        #{eventState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.EventInfo" >
+    update event_info
+    <set >
+      <if test="eventName != null" >
+        event_name = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDescription != null" >
+        event_description = #{eventDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStartTime != null" >
+        event_start_time = #{eventStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventEndTime != null" >
+        event_end_time = #{eventEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportCategory != null" >
+        sport_category = #{sportCategory,jdbcType=INTEGER},
+      </if>
+      <if test="sportType != null" >
+        sport_type = #{sportType,jdbcType=INTEGER},
+      </if>
+      <if test="sportId != null" >
+        sport_id = #{sportId,jdbcType=BIGINT},
+      </if>
+      <if test="sportName != null" >
+        sport_name = #{sportName,jdbcType=VARCHAR},
+      </if>
+      <if test="startAddress != null" >
+        start_address = #{startAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="xIndex != null" >
+        x_index = #{xIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="yIndex != null" >
+        y_index = #{yIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        is_public = #{isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="eventState != null" >
+        event_state = #{eventState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.EventInfo" >
+    update event_info
+    set event_name = #{eventName,jdbcType=VARCHAR},
+      event_description = #{eventDescription,jdbcType=VARCHAR},
+      event_start_time = #{eventStartTime,jdbcType=TIMESTAMP},
+      event_end_time = #{eventEndTime,jdbcType=TIMESTAMP},
+      sport_category = #{sportCategory,jdbcType=INTEGER},
+      sport_type = #{sportType,jdbcType=INTEGER},
+      sport_id = #{sportId,jdbcType=BIGINT},
+      sport_name = #{sportName,jdbcType=VARCHAR},
+      start_address = #{startAddress,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=INTEGER},
+      x_index = #{xIndex,jdbcType=VARCHAR},
+      y_index = #{yIndex,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      event_state = #{eventState,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.UserInfoMapper">
+	<resultMap id="BaseResultMap" type="com.bandex.apicenter.model.UserInfo">
+		<id column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="user_icon" property="userIcon" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="height" property="height" jdbcType="INTEGER" />
+		<result column="weight" property="weight" jdbcType="DOUBLE" />
+		<result column="bmi" property="bmi" jdbcType="DOUBLE" />
+		<result column="hobby" property="hobby" jdbcType="VARCHAR" />
+		<result column="introduce" property="introduce" jdbcType="VARCHAR" />
+		<result column="gymnasium" property="gymnasium" jdbcType="VARCHAR" />
+		<result column="user_integral" property="userIntegral" jdbcType="INTEGER" />
+		<result column="user_state" property="userState" jdbcType="INTEGER" />
+		<result column="user_level" property="userLevel" jdbcType="INTEGER" />
+		<result column="user_type" property="userType" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_id" property="createId" jdbcType="BIGINT" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="modify_id" property="modifyId" jdbcType="BIGINT" />
+		<result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+		<result column="user_from" property="userFrom" jdbcType="BIGINT" />
+		<result column="push_device" property="pushDevice" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, nick_name, user_icon, birthday, sex, height, weight, bmi, hobby, introduce,
+		gymnasium, user_integral, user_state, user_level, user_type, create_time, create_id,
+		modify_time, modify_id, delete_flag, user_from, push_device
+	</sql>
+
+	<select id="queryUserInfoByUserIdList" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where user_id IN
+		<foreach item="userId" collection="userIdList" open="(" close=")" separator=",">
+			#{userId}
+		</foreach>
+		<if test="searchKey != null">
+			and nick_name like '%'||#{searchKey}||'%'
+		</if>
+		order by user_id
+		limit #{pageIndex} , #{pageSize}
+	</select>
+	<select id="queryUserIdList" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where user_id in
+		<foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+			#userId#
+		</foreach>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_info
+		where user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.bandex.apicenter.model.UserInfo">
+		insert into user_info (user_id, nick_name, user_icon, birthday,
+		sex, height, weight,
+		bmi, hobby, introduce,
+		gymnasium, user_integral, user_state,
+		user_level, user_type, create_time,
+		create_id, modify_time, modify_id,
+		delete_flag, user_from, push_device
+		)
+		values (#{userId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{userIcon,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+		#{sex,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{weight,jdbcType=DOUBLE},
+		#{bmi,jdbcType=DOUBLE}, #{hobby,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR},
+		#{gymnasium,jdbcType=VARCHAR}, #{userIntegral,jdbcType=INTEGER}, #{userState,jdbcType=INTEGER},
+		#{userLevel,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+		#{createId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=BIGINT},
+		#{deleteFlag,jdbcType=INTEGER}, #{userFrom,jdbcType=BIGINT}, #{pushDevice,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.bandex.apicenter.model.UserInfo">
+		<selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="userIcon != null">
+				user_icon,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="height != null">
+				height,
+			</if>
+			<if test="weight != null">
+				weight,
+			</if>
+			<if test="bmi != null">
+				bmi,
+			</if>
+			<if test="hobby != null">
+				hobby,
+			</if>
+			<if test="introduce != null">
+				introduce,
+			</if>
+			<if test="gymnasium != null">
+				gymnasium,
+			</if>
+			<if test="userIntegral != null">
+				user_integral,
+			</if>
+			<if test="userState != null">
+				user_state,
+			</if>
+			<if test="userLevel != null">
+				user_level,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="modifyId != null">
+				modify_id,
+			</if>
+			<if test="deleteFlag != null">
+				delete_flag,
+			</if>
+			<if test="userFrom != null">
+				user_from,
+			</if>
+			<if test="pushDevice != null">
+				push_device,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="userIcon != null">
+				#{userIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="height != null">
+				#{height,jdbcType=INTEGER},
+			</if>
+			<if test="weight != null">
+				#{weight,jdbcType=DOUBLE},
+			</if>
+			<if test="bmi != null">
+				#{bmi,jdbcType=DOUBLE},
+			</if>
+			<if test="hobby != null">
+				#{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				#{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="gymnasium != null">
+				#{gymnasium,jdbcType=VARCHAR},
+			</if>
+			<if test="userIntegral != null">
+				#{userIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="userState != null">
+				#{userState,jdbcType=INTEGER},
+			</if>
+			<if test="userLevel != null">
+				#{userLevel,jdbcType=INTEGER},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				#{modifyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleteFlag != null">
+				#{deleteFlag,jdbcType=INTEGER},
+			</if>
+			<if test="userFrom != null">
+				#{userFrom,jdbcType=BIGINT},
+			</if>
+			<if test="pushDevice != null">
+				#{pushDevice,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.UserInfo">
+		update user_info
+		<set>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="userIcon != null">
+				user_icon = #{userIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="height != null">
+				height = #{height,jdbcType=INTEGER},
+			</if>
+			<if test="weight != null">
+				weight = #{weight,jdbcType=DOUBLE},
+			</if>
+			<if test="bmi != null">
+				bmi = #{bmi,jdbcType=DOUBLE},
+			</if>
+			<if test="hobby != null">
+				hobby = #{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				introduce = #{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="gymnasium != null">
+				gymnasium = #{gymnasium,jdbcType=VARCHAR},
+			</if>
+			<if test="userIntegral != null">
+				user_integral = #{userIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="userState != null">
+				user_state = #{userState,jdbcType=INTEGER},
+			</if>
+			<if test="userLevel != null">
+				user_level = #{userLevel,jdbcType=INTEGER},
+			</if>
+			<if test="userType != null">
+				user_type = #{userType,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createId != null">
+				create_id = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				modify_id = #{modifyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleteFlag != null">
+				delete_flag = #{deleteFlag,jdbcType=INTEGER},
+			</if>
+			<if test="userFrom != null">
+				user_from = #{userFrom,jdbcType=BIGINT},
+			</if>
+			<if test="pushDevice != null">
+				push_device = #{pushDevice,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.UserInfo">
+		update user_info
+		set nick_name = #{nickName,jdbcType=VARCHAR},
+		user_icon = #{userIcon,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=TIMESTAMP},
+		sex = #{sex,jdbcType=INTEGER},
+		height = #{height,jdbcType=INTEGER},
+		weight = #{weight,jdbcType=DOUBLE},
+		bmi = #{bmi,jdbcType=DOUBLE},
+		hobby = #{hobby,jdbcType=VARCHAR},
+		introduce = #{introduce,jdbcType=VARCHAR},
+		gymnasium = #{gymnasium,jdbcType=VARCHAR},
+		user_integral = #{userIntegral,jdbcType=INTEGER},
+		user_state = #{userState,jdbcType=INTEGER},
+		user_level = #{userLevel,jdbcType=INTEGER},
+		user_type = #{userType,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		create_id = #{createId,jdbcType=BIGINT},
+		modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+		modify_id = #{modifyId,jdbcType=BIGINT},
+		delete_flag = #{deleteFlag,jdbcType=INTEGER},
+		user_from = #{userFrom,jdbcType=BIGINT},
+		push_device = #{pushDevice,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+</mapper>

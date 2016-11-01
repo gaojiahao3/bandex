@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.CommonProductMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.CommonProduct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="product_price" property="productPrice" jdbcType="DOUBLE" />
+    <result column="product_need_integral" property="productNeedIntegral" jdbcType="BIGINT" />
+    <result column="product_freight" property="productFreight" jdbcType="DOUBLE" />
+    <result column="freight_step" property="freightStep" jdbcType="DOUBLE" />
+    <result column="proudct_state" property="proudctState" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="sale_num" property="saleNum" jdbcType="INTEGER" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="return_end_day" property="returnEndDay" jdbcType="INTEGER" />
+    <result column="product_integral" property="productIntegral" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_address" property="activityAddress" jdbcType="VARCHAR" />
+    <result column="sport_start_time" property="sportStartTime" jdbcType="TIMESTAMP" />
+    <result column="sport_end_time" property="sportEndTime" jdbcType="TIMESTAMP" />
+    <result column="sport_integral" property="sportIntegral" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_id" property="modifyId" jdbcType="BIGINT" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="product_colors" property="productColors" jdbcType="VARCHAR" />
+    <result column="product_rules" property="productRules" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bandex.apicenter.model.CommonProduct" extends="BaseResultMap" >
+    <result column="product_detail" property="productDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_name, product_code, product_icon, product_type, remark, product_price, 
+    product_need_integral, product_freight, freight_step, proudct_state, stock, sale_num, 
+    order_num, return_end_day, product_integral, activity_name, activity_address, sport_start_time, 
+    sport_end_time, sport_integral, create_time, create_id, modify_time, modify_id, delete_flag, 
+    product_colors, product_rules
+  </sql>
+  <sql id="Blob_Column_List" >
+    product_detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from common_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from common_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.CommonProduct" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into common_product (product_name, product_code, product_icon, 
+      product_type, remark, product_price, 
+      product_need_integral, product_freight, freight_step, 
+      proudct_state, stock, sale_num, 
+      order_num, return_end_day, product_integral, 
+      activity_name, activity_address, sport_start_time, 
+      sport_end_time, sport_integral, create_time, 
+      create_id, modify_time, modify_id, 
+      delete_flag, product_colors, product_rules, 
+      product_detail)
+    values (#{productName,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{productIcon,jdbcType=VARCHAR}, 
+      #{productType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{productPrice,jdbcType=DOUBLE}, 
+      #{productNeedIntegral,jdbcType=BIGINT}, #{productFreight,jdbcType=DOUBLE}, #{freightStep,jdbcType=DOUBLE}, 
+      #{proudctState,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{saleNum,jdbcType=INTEGER}, 
+      #{orderNum,jdbcType=INTEGER}, #{returnEndDay,jdbcType=INTEGER}, #{productIntegral,jdbcType=INTEGER}, 
+      #{activityName,jdbcType=VARCHAR}, #{activityAddress,jdbcType=VARCHAR}, #{sportStartTime,jdbcType=TIMESTAMP}, 
+      #{sportEndTime,jdbcType=TIMESTAMP}, #{sportIntegral,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=BIGINT}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{productColors,jdbcType=VARCHAR}, #{productRules,jdbcType=VARCHAR}, 
+      #{productDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.CommonProduct" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into common_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="productIcon != null" >
+        product_icon,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="productPrice != null" >
+        product_price,
+      </if>
+      <if test="productNeedIntegral != null" >
+        product_need_integral,
+      </if>
+      <if test="productFreight != null" >
+        product_freight,
+      </if>
+      <if test="freightStep != null" >
+        freight_step,
+      </if>
+      <if test="proudctState != null" >
+        proudct_state,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="saleNum != null" >
+        sale_num,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="returnEndDay != null" >
+        return_end_day,
+      </if>
+      <if test="productIntegral != null" >
+        product_integral,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="activityAddress != null" >
+        activity_address,
+      </if>
+      <if test="sportStartTime != null" >
+        sport_start_time,
+      </if>
+      <if test="sportEndTime != null" >
+        sport_end_time,
+      </if>
+      <if test="sportIntegral != null" >
+        sport_integral,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyId != null" >
+        modify_id,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="productColors != null" >
+        product_colors,
+      </if>
+      <if test="productRules != null" >
+        product_rules,
+      </if>
+      <if test="productDetail != null" >
+        product_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productIcon != null" >
+        #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNeedIntegral != null" >
+        #{productNeedIntegral,jdbcType=BIGINT},
+      </if>
+      <if test="productFreight != null" >
+        #{productFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="freightStep != null" >
+        #{freightStep,jdbcType=DOUBLE},
+      </if>
+      <if test="proudctState != null" >
+        #{proudctState,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnEndDay != null" >
+        #{returnEndDay,jdbcType=INTEGER},
+      </if>
+      <if test="productIntegral != null" >
+        #{productIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAddress != null" >
+        #{activityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sportStartTime != null" >
+        #{sportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportEndTime != null" >
+        #{sportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportIntegral != null" >
+        #{sportIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        #{modifyId,jdbcType=BIGINT},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productColors != null" >
+        #{productColors,jdbcType=VARCHAR},
+      </if>
+      <if test="productRules != null" >
+        #{productRules,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null" >
+        #{productDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.CommonProduct" >
+    update common_product
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productIcon != null" >
+        product_icon = #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        product_price = #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNeedIntegral != null" >
+        product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+      </if>
+      <if test="productFreight != null" >
+        product_freight = #{productFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="freightStep != null" >
+        freight_step = #{freightStep,jdbcType=DOUBLE},
+      </if>
+      <if test="proudctState != null" >
+        proudct_state = #{proudctState,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="saleNum != null" >
+        sale_num = #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnEndDay != null" >
+        return_end_day = #{returnEndDay,jdbcType=INTEGER},
+      </if>
+      <if test="productIntegral != null" >
+        product_integral = #{productIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAddress != null" >
+        activity_address = #{activityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sportStartTime != null" >
+        sport_start_time = #{sportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportEndTime != null" >
+        sport_end_time = #{sportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sportIntegral != null" >
+        sport_integral = #{sportIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        modify_id = #{modifyId,jdbcType=BIGINT},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productColors != null" >
+        product_colors = #{productColors,jdbcType=VARCHAR},
+      </if>
+      <if test="productRules != null" >
+        product_rules = #{productRules,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null" >
+        product_detail = #{productDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bandex.apicenter.model.CommonProduct" >
+    update common_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_icon = #{productIcon,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DOUBLE},
+      product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+      product_freight = #{productFreight,jdbcType=DOUBLE},
+      freight_step = #{freightStep,jdbcType=DOUBLE},
+      proudct_state = #{proudctState,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      sale_num = #{saleNum,jdbcType=INTEGER},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      return_end_day = #{returnEndDay,jdbcType=INTEGER},
+      product_integral = #{productIntegral,jdbcType=INTEGER},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_address = #{activityAddress,jdbcType=VARCHAR},
+      sport_start_time = #{sportStartTime,jdbcType=TIMESTAMP},
+      sport_end_time = #{sportEndTime,jdbcType=TIMESTAMP},
+      sport_integral = #{sportIntegral,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=BIGINT},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      product_colors = #{productColors,jdbcType=VARCHAR},
+      product_rules = #{productRules,jdbcType=VARCHAR},
+      product_detail = #{productDetail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.CommonProduct" >
+    update common_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_icon = #{productIcon,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DOUBLE},
+      product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+      product_freight = #{productFreight,jdbcType=DOUBLE},
+      freight_step = #{freightStep,jdbcType=DOUBLE},
+      proudct_state = #{proudctState,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      sale_num = #{saleNum,jdbcType=INTEGER},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      return_end_day = #{returnEndDay,jdbcType=INTEGER},
+      product_integral = #{productIntegral,jdbcType=INTEGER},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_address = #{activityAddress,jdbcType=VARCHAR},
+      sport_start_time = #{sportStartTime,jdbcType=TIMESTAMP},
+      sport_end_time = #{sportEndTime,jdbcType=TIMESTAMP},
+      sport_integral = #{sportIntegral,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=BIGINT},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      product_colors = #{productColors,jdbcType=VARCHAR},
+      product_rules = #{productRules,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

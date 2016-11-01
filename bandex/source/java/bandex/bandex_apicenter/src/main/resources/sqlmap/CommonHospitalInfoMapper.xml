@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.CommonHospitalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.CommonHospitalInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hospital_name" property="hospitalName" jdbcType="VARCHAR" />
+    <result column="hostpital_level" property="hostpitalLevel" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="hospital_pic" property="hospitalPic" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="district_id" property="districtId" jdbcType="BIGINT" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="address2" property="address2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hospital_name, hostpital_level, telphone, hospital_pic, province_id, province_name, 
+    city_id, city_name, district_id, district_name, address2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from common_hospital_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from common_hospital_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.CommonHospitalInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into common_hospital_info (hospital_name, hostpital_level, telphone, 
+      hospital_pic, province_id, province_name, 
+      city_id, city_name, district_id, 
+      district_name, address2)
+    values (#{hospitalName,jdbcType=VARCHAR}, #{hostpitalLevel,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
+      #{hospitalPic,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{districtId,jdbcType=BIGINT}, 
+      #{districtName,jdbcType=VARCHAR}, #{address2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.CommonHospitalInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into common_hospital_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hospitalName != null" >
+        hospital_name,
+      </if>
+      <if test="hostpitalLevel != null" >
+        hostpital_level,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="hospitalPic != null" >
+        hospital_pic,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="districtName != null" >
+        district_name,
+      </if>
+      <if test="address2 != null" >
+        address2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hospitalName != null" >
+        #{hospitalName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostpitalLevel != null" >
+        #{hostpitalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalPic != null" >
+        #{hospitalPic,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="districtName != null" >
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        #{address2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.CommonHospitalInfo" >
+    update common_hospital_info
+    <set >
+      <if test="hospitalName != null" >
+        hospital_name = #{hospitalName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostpitalLevel != null" >
+        hostpital_level = #{hostpitalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalPic != null" >
+        hospital_pic = #{hospitalPic,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="address2 != null" >
+        address2 = #{address2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.CommonHospitalInfo" >
+    update common_hospital_info
+    set hospital_name = #{hospitalName,jdbcType=VARCHAR},
+      hostpital_level = #{hostpitalLevel,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      hospital_pic = #{hospitalPic,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=BIGINT},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      district_id = #{districtId,jdbcType=BIGINT},
+      district_name = #{districtName,jdbcType=VARCHAR},
+      address2 = #{address2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

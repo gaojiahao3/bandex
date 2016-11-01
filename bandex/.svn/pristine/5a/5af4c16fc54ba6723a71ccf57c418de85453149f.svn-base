@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.OrderReturnItemMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.OrderReturnItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="return_id" property="returnId" jdbcType="BIGINT" />
+    <result column="return_code" property="returnCode" jdbcType="VARCHAR" />
+    <result column="pro_order_id" property="proOrderId" jdbcType="BIGINT" />
+    <result column="product_id" property="productId" jdbcType="BIGINT" />
+    <result column="product_code" property="productCode" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
+    <result column="product_price" property="productPrice" jdbcType="DOUBLE" />
+    <result column="product_need_integral" property="productNeedIntegral" jdbcType="BIGINT" />
+    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="product_colors" property="productColors" jdbcType="VARCHAR" />
+    <result column="product_rules" property="productRules" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, return_id, return_code, pro_order_id, product_id, product_code, product_name, 
+    product_icon, product_price, product_need_integral, return_num, create_time, modify_time, 
+    delete_flag, product_colors, product_rules
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_return_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_return_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.OrderReturnItem" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_return_item (return_id, return_code, pro_order_id, 
+      product_id, product_code, product_name, 
+      product_icon, product_price, product_need_integral, 
+      return_num, create_time, modify_time, 
+      delete_flag, product_colors, product_rules
+      )
+    values (#{returnId,jdbcType=BIGINT}, #{returnCode,jdbcType=VARCHAR}, #{proOrderId,jdbcType=BIGINT}, 
+      #{productId,jdbcType=BIGINT}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productIcon,jdbcType=VARCHAR}, #{productPrice,jdbcType=DOUBLE}, #{productNeedIntegral,jdbcType=BIGINT}, 
+      #{returnNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{productColors,jdbcType=VARCHAR}, #{productRules,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.OrderReturnItem" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_return_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="returnId != null" >
+        return_id,
+      </if>
+      <if test="returnCode != null" >
+        return_code,
+      </if>
+      <if test="proOrderId != null" >
+        pro_order_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productIcon != null" >
+        product_icon,
+      </if>
+      <if test="productPrice != null" >
+        product_price,
+      </if>
+      <if test="productNeedIntegral != null" >
+        product_need_integral,
+      </if>
+      <if test="returnNum != null" >
+        return_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="productColors != null" >
+        product_colors,
+      </if>
+      <if test="productRules != null" >
+        product_rules,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="returnId != null" >
+        #{returnId,jdbcType=BIGINT},
+      </if>
+      <if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proOrderId != null" >
+        #{proOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productIcon != null" >
+        #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNeedIntegral != null" >
+        #{productNeedIntegral,jdbcType=BIGINT},
+      </if>
+      <if test="returnNum != null" >
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productColors != null" >
+        #{productColors,jdbcType=VARCHAR},
+      </if>
+      <if test="productRules != null" >
+        #{productRules,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.OrderReturnItem" >
+    update order_return_item
+    <set >
+      <if test="returnId != null" >
+        return_id = #{returnId,jdbcType=BIGINT},
+      </if>
+      <if test="returnCode != null" >
+        return_code = #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proOrderId != null" >
+        pro_order_id = #{proOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productIcon != null" >
+        product_icon = #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        product_price = #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNeedIntegral != null" >
+        product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+      </if>
+      <if test="returnNum != null" >
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="productColors != null" >
+        product_colors = #{productColors,jdbcType=VARCHAR},
+      </if>
+      <if test="productRules != null" >
+        product_rules = #{productRules,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.OrderReturnItem" >
+    update order_return_item
+    set return_id = #{returnId,jdbcType=BIGINT},
+      return_code = #{returnCode,jdbcType=VARCHAR},
+      pro_order_id = #{proOrderId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_icon = #{productIcon,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DOUBLE},
+      product_need_integral = #{productNeedIntegral,jdbcType=BIGINT},
+      return_num = #{returnNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      product_colors = #{productColors,jdbcType=VARCHAR},
+      product_rules = #{productRules,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

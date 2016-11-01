@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.UserIntegrationDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.UserIntegrationDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="integral_num" property="integralNum" jdbcType="INTEGER" />
+    <result column="integral_type" property="integralType" jdbcType="INTEGER" />
+    <result column="integral_from" property="integralFrom" jdbcType="INTEGER" />
+    <result column="from_id" property="fromId" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="integral_before" property="integralBefore" jdbcType="INTEGER" />
+    <result column="integral_after" property="integralAfter" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, integral_num, integral_type, integral_from, from_id, remark, integral_before, 
+    integral_after, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_integration_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAllByUserId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from user_integration_detail
+    where user_id = #{userId} order by create_time desc  limit #{index} , #{limit}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_integration_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.UserIntegrationDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_integration_detail (user_id, integral_num, integral_type, 
+      integral_from, from_id, remark, 
+      integral_before, integral_after, create_time
+      )
+    values (#{userId,jdbcType=BIGINT}, #{integralNum,jdbcType=INTEGER}, #{integralType,jdbcType=INTEGER}, 
+      #{integralFrom,jdbcType=INTEGER}, #{fromId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{integralBefore,jdbcType=INTEGER}, #{integralAfter,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.UserIntegrationDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_integration_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="integralNum != null" >
+        integral_num,
+      </if>
+      <if test="integralType != null" >
+        integral_type,
+      </if>
+      <if test="integralFrom != null" >
+        integral_from,
+      </if>
+      <if test="fromId != null" >
+        from_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="integralBefore != null" >
+        integral_before,
+      </if>
+      <if test="integralAfter != null" >
+        integral_after,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="integralNum != null" >
+        #{integralNum,jdbcType=INTEGER},
+      </if>
+      <if test="integralType != null" >
+        #{integralType,jdbcType=INTEGER},
+      </if>
+      <if test="integralFrom != null" >
+        #{integralFrom,jdbcType=INTEGER},
+      </if>
+      <if test="fromId != null" >
+        #{fromId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="integralBefore != null" >
+        #{integralBefore,jdbcType=INTEGER},
+      </if>
+      <if test="integralAfter != null" >
+        #{integralAfter,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.UserIntegrationDetail" >
+    update user_integration_detail
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="integralNum != null" >
+        integral_num = #{integralNum,jdbcType=INTEGER},
+      </if>
+      <if test="integralType != null" >
+        integral_type = #{integralType,jdbcType=INTEGER},
+      </if>
+      <if test="integralFrom != null" >
+        integral_from = #{integralFrom,jdbcType=INTEGER},
+      </if>
+      <if test="fromId != null" >
+        from_id = #{fromId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="integralBefore != null" >
+        integral_before = #{integralBefore,jdbcType=INTEGER},
+      </if>
+      <if test="integralAfter != null" >
+        integral_after = #{integralAfter,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.UserIntegrationDetail" >
+    update user_integration_detail
+    set user_id = #{userId,jdbcType=BIGINT},
+      integral_num = #{integralNum,jdbcType=INTEGER},
+      integral_type = #{integralType,jdbcType=INTEGER},
+      integral_from = #{integralFrom,jdbcType=INTEGER},
+      from_id = #{fromId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      integral_before = #{integralBefore,jdbcType=INTEGER},
+      integral_after = #{integralAfter,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

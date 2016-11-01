@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.UserFriendMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.UserFriend" >
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="friend_id" property="friendId" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.UserFriend" >
+    insert into user_friend (user_id, friend_id)
+    values (#{userId,jdbcType=BIGINT}, #{friendId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.UserFriend" >
+    insert into user_friend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="friendId != null" >
+        friend_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="friendId != null" >
+        #{friendId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="queryFriendUserIdByUserIdFriendId" parameterType="map" resultMap="BaseResultMap">
+    SELECT user_id,friend_id from user_friend where user_id = #{userId} and friend_id=#{friendId}
+  </select>
+  <select id="queryFriendUserIdByUserId" parameterType="long" resultType="long">
+    SELECT friend_id from user_friend where user_id = #{userId}
+  </select>
+  <delete id="deleteUserFriend" parameterType="map">
+    DELETE FROM user_friend where   user_id = #{userId} and friend_id = #{friendId}
+  </delete>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.apicenter.dao.UserSportLbsMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.apicenter.model.UserSportLbs" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="event_id" property="eventId" jdbcType="BIGINT" />
+    <result column="user_sport_id" property="userSportId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="x_index" property="xIndex" jdbcType="VARCHAR" />
+    <result column="y_index" property="yIndex" jdbcType="VARCHAR" />
+    <result column="event_time" property="eventTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_id, user_sport_id, user_id, x_index, y_index, event_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_sport_lbs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_sport_lbs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.apicenter.model.UserSportLbs" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_sport_lbs (event_id, user_sport_id, user_id, 
+      x_index, y_index, event_time, 
+      create_time)
+    values (#{eventId,jdbcType=BIGINT}, #{userSportId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{xIndex,jdbcType=VARCHAR}, #{yIndex,jdbcType=VARCHAR}, #{eventTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.apicenter.model.UserSportLbs" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_sport_lbs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        event_id,
+      </if>
+      <if test="userSportId != null" >
+        user_sport_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="xIndex != null" >
+        x_index,
+      </if>
+      <if test="yIndex != null" >
+        y_index,
+      </if>
+      <if test="eventTime != null" >
+        event_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        #{eventId,jdbcType=BIGINT},
+      </if>
+      <if test="userSportId != null" >
+        #{userSportId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="xIndex != null" >
+        #{xIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="yIndex != null" >
+        #{yIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null" >
+        #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.apicenter.model.UserSportLbs" >
+    update user_sport_lbs
+    <set >
+      <if test="eventId != null" >
+        event_id = #{eventId,jdbcType=BIGINT},
+      </if>
+      <if test="userSportId != null" >
+        user_sport_id = #{userSportId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="xIndex != null" >
+        x_index = #{xIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="yIndex != null" >
+        y_index = #{yIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null" >
+        event_time = #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.apicenter.model.UserSportLbs" >
+    update user_sport_lbs
+    set event_id = #{eventId,jdbcType=BIGINT},
+      user_sport_id = #{userSportId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      x_index = #{xIndex,jdbcType=VARCHAR},
+      y_index = #{yIndex,jdbcType=VARCHAR},
+      event_time = #{eventTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bandex.api.dao.SysRoleResourceRefMapper" >
+  <resultMap id="BaseResultMap" type="com.bandex.api.model.SysRoleResourceRef" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, role_id, resource_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_resource_ref
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role_resource_ref
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bandex.api.model.SysRoleResourceRef" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_role_resource_ref (role_id, resource_id)
+    values (#{roleId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bandex.api.model.SysRoleResourceRef" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_role_resource_ref
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bandex.api.model.SysRoleResourceRef" >
+    update sys_role_resource_ref
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        resource_id = #{resourceId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bandex.api.model.SysRoleResourceRef" >
+    update sys_role_resource_ref
+    set role_id = #{roleId,jdbcType=BIGINT},
+      resource_id = #{resourceId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="selectSysRoleResourceRefList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_role_resource_ref
+        where 1=1
+        <if test="resourceId != null" >
+            and resource_id = #{resourceId,jdbcType=BIGINT}
+        </if>
+        <if test="roleId != null">
+            and role_id = #{roleId,jdbcType=BIGINT}
+        </if>
+        ORDER BY id  LIMIT #{startIndex,jdbcType=INTEGER},#{endIndex,jdbcType=INTEGER}
+    </select>
+    <select id="selectSysRoleResourceRefCount" resultType="java.lang.Long" parameterType="java.util.HashMap">
+        select
+        count(1)
+        from sys_role_resource_ref
+        where 1=1
+        <if test="resourceId != null" >
+            and resource_id = #{resourceId,jdbcType=BIGINT}
+        </if>
+        <if test="roleId != null">
+            and role_id = #{roleId,jdbcType=BIGINT}
+        </if>
+    </select>
+    <delete id="deleteSysRoleResource" parameterType="java.util.HashMap" >
+        delete from sys_role_resource_ref
+        where  resource_id = #{resourceId,jdbcType=BIGINT}
+        and role_id = #{roleId,jdbcType=BIGINT}
+    </delete>
+</mapper>
